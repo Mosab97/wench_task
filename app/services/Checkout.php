@@ -31,7 +31,7 @@ class Checkout
 
     public function getTotal(array $cart)
     {
-        if (sizeof($cart) >= 3) $this->products['SR1']['price'] = 4.5;
+        if ($cart['SR1'] >= 3) $this->products['SR1']['price'] = 4.5;
         else $this->products['SR1']['price'] = 5;
         $total = 0;
         foreach ($cart as $item_code => $item_amount) {

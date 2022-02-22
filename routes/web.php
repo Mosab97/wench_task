@@ -48,7 +48,4 @@ Route::get('/', function () {
             'total' => $cart3_total,
         ],
     ];
-    dd($cart1_total, $cart2_total, $cart3_total);
-    $item = $co->scan('FR1');
-    return $item;
 });
