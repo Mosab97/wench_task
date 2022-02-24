@@ -6,6 +6,12 @@ namespace App\services;
 
 class Checkout
 {
+    public $total = 0;
+    public $cart = [
+        'FR1' => 0,
+        'SR1' => 0,
+        'CF1' => 0,
+    ];
     public $products = [
         'FR1' => [
             'product_code' => 'FR1',
@@ -19,39 +25,28 @@ class Checkout
         ],
         'CF1' => [
             'product_code' => 'CF1',
-            'name' => 'Strawberry',
+            'name' => 'Coffee',
             'price' => 11.23,
         ],
     ];
 
+
     public function scan($item_code)
     {
-        return $this->products[$item_code];
-    }
-
-    public function getTotal(array $cart)
-    {
-        if ($cart['SR1'] >= 3) $this->products['SR1']['price'] = 4.5;
-        else $this->products['SR1']['price'] = 5;
-        $total = 0;
-        foreach ($cart as $item_code => $item_amount) {
-            $product = $this->scan($item_code);
-            if ($item_code == 'FR1') $total += $this->getFR1Total($product, $item_amount, $total);
-            else $total += ($product['price'] * $item_amount);
-        }
-        return $total;
-
-    }
-
-    private function getFR1Total($product, $item_amount, $total)
-    {
-        if ($item_amount > 1) {
-            $total += $product['price'] * ($item_amount - 1);
+        $this->cart[$item_code] = $this->cart[$item_code] + 1;
+        if ($item_code == 'FR1') {
+            $qty = $this->cart[$item_code];
+            $qty = ($qty % 2 == 0) ? $qty / 2 : $qty - $qty % 2; // If you buy one Fruit Tea get another for free
+            $this->total += ($this->products[$item_code]['price'] * $qty);
         } else {
-            $total += $product['price'];
+            if ($this->cart['SR1'] >= 3) $this->products['SR1']['price'] = 4.5;
+            else $this->products['SR1']['price'] = 5;
+            $this->total += $this->products[$item_code]['price'];
         }
-        return $total;
-
     }
 
+    public function checkFR1Product()
+    {
+
+    }
 }

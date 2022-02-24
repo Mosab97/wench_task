@@ -15,37 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $cart1 = [
-        'FR1' => 3,
-        'SR1' => 1,
-        'CF1' => 1,
-    ];
-    $cart2 = [
-        'FR1' => 2,
-        'SR1' => 0,
-        'CF1' => 0,
-    ];
-    $cart3 = [
-        'FR1' => 1,
-        'SR1' => 3,
-        'CF1' => 0,
-    ];
     $co = new Checkout();
-    $cart1_total = $co->getTotal($cart1);
-    $cart2_total = $co->getTotal($cart2);
-    $cart3_total = $co->getTotal($cart3);
-    return [
-        'cart1' => [
-            'items' => $cart1,
-            'total' => $cart1_total,
-        ],
-        'cart2' => [
-            'items' => $cart2,
-            'total' => $cart2_total,
-        ],
-        'cart3' => [
-            'items' => $cart3,
-            'total' => $cart3_total,
-        ],
-    ];
+    /* Case1*/
+//    $co->scan('FR1');
+//    $co->scan('SR1');
+//    $co->scan('FR1');
+//    $co->scan('FR1');
+//    $co->scan('CF1');
+    /***************************************/
+    /* Case2*/
+//    $co->scan('FR1');
+//    $co->scan('FR1');
+
+
+    /***************************************/
+    /* Case3*/
+    $co->scan('SR1');
+    $co->scan('SR1');
+    $co->scan('FR1');
+    $co->scan('SR1');
+    dd($co->total, $co->cart);
 });
